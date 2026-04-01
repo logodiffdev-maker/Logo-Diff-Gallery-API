@@ -1,0 +1,238 @@
+# Logo Diffusion API - Filter Endpoints
+
+## Base URL
+```
+https://logo-diff-api.vercel.app/api/gallery
+```
+
+---
+
+## 📋 Struktur Query Parameter
+
+### Parameter yang digunakan:
+- `page` - Nomor halaman (default: 1)
+- `limit` - Jumlah items per page (default: 40)
+- `filter` - JSON object dengan kondisi filter
+- `sort` - JSON array untuk sorting [field, direction]
+
+---
+## 🎨 STYLE FILTERS
+
+### 1. Pictorial
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["pictorial"]}&sort=["createdAt","desc"]
+```
+
+### 2. Mascot
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["mascot"]}&sort=["createdAt","desc"]
+```
+
+### 3. Badge
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["badge"]}&sort=["createdAt","desc"]
+```
+
+### 4. Cartoon
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["cartoon"]}&sort=["createdAt","desc"]
+```
+
+### 5. Icon
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["icon"]}&sort=["createdAt","desc"]
+```
+
+### 6. Abstract
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["abstract"]}&sort=["createdAt","desc"]
+```
+
+### 7. Line-Art
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["line-art"]}&sort=["createdAt","desc"]
+```
+
+### 8. Logo-Type
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["logo-type"]}&sort=["createdAt","desc"]
+```
+
+### 9. Monogram
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"style_filter":["monogram"]}&sort=["createdAt","desc"]
+```
+
+---
+
+## 🏭 INDUSTRY FILTERS
+
+### 1. Food and Beverage Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Food and Beverage Industry"]}&sort=["createdAt","desc"]
+```
+
+### 2. Technology Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Technology Industry"]}&sort=["createdAt","desc"]
+```
+
+### 3. Creative Arts Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Creative Arts Industry"]}&sort=["createdAt","desc"]
+```
+
+### 4. Health and Wellness Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Health and Wellness Industry"]}&sort=["createdAt","desc"]
+```
+
+### 5. Retail and Commerce Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Retail and Commerce Industry"]}&sort=["createdAt","desc"]
+```
+
+### 6. Education Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Education Industry"]}&sort=["createdAt","desc"]
+```
+
+### 7. Entertainment Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Entertainment Industry"]}&sort=["createdAt","desc"]
+```
+
+### 8. Home and Living Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Home and Living Industry"]}&sort=["createdAt","desc"]
+```
+
+### 9. Automotive Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Automotive Industry"]}&sort=["createdAt","desc"]
+```
+
+### 10. Nature and Outdoors Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Nature and Outdoors Industry"]}&sort=["createdAt","desc"]
+```
+
+### 11. Fashion and Apparel Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Fashion and Apparel Industry"]}&sort=["createdAt","desc"]
+```
+
+### 12. Hospitality and Travel Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Hospitality and Travel Industry"]}&sort=["createdAt","desc"]
+```
+
+### 13. Community and Nonprofit Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Community and Nonprofit Industry"]}&sort=["createdAt","desc"]
+```
+
+### 14. Sports and Recreation Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Sports and Recreation Industry"]}&sort=["createdAt","desc"]
+```
+
+### 15. Manufacturing and Industrial Industry
+```
+GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft":false,"generationMethods":["v5/fx","v5/xl","v5/waterfall","v5/bolt","v5/style-transfer"],"industry_filter":["Manufacturing and Industrial Industry"]}&sort=["createdAt","desc"]
+```
+
+---
+
+## 🔧 Cara Kerja Filter
+
+### Filter Object Structure:
+```json
+{
+  "draft": false,                      // Hanya tampilkan published items
+  "generationMethods": [               // Hanya items dari method ini
+    "v5/fx",
+    "v5/xl", 
+    "v5/waterfall",
+    "v5/bolt",
+    "v5/style-transfer"
+  ],
+  "style_filter": ["pictorial"],        // Atau gunakan ini untuk style
+  "industry_filter": ["Technology Industry"]  // Atau gunakan ini untuk industry
+}
+```
+
+### Poin Penting:
+1. **Hanya gunakan SATU dari** `style_filter` atau `industry_filter`, tidak keduanya
+2. **draft: false** berarti hanya tampilkan item yang sudah dipublis
+3. **generationMethods** memfilter berdasarkan metode generasi AI
+4. **Nilai array** - bisa diisi multiple values jika perlu kombinasi
+
+---
+
+## 📊 Contoh Response
+
+```json
+{
+  "docs": [
+    {
+      "_id": "65b56267ada511f465bda2a9",
+      "generation": {
+        "prompt": "off-road car",
+        "imageUrl": "https://lodi-generations.s3.amazonaws.com/...",
+        "contentStyle": "icon",
+        "createdAt": "2024-01-27T20:00:56.373Z"
+      },
+      "createdAt": "2024-01-27T20:07:03.782Z"
+    }
+  ],
+  "totalDocs": 3251,
+  "limit": 40,
+  "page": 1,
+  "totalPages": 82,
+  "hasNextPage": true,
+  "hasPrevPage": false
+}
+```
+
+---
+
+## 🔗 Cara Testing di Postman
+
+1. Buka Postman
+2. Pilih **GET** method
+3. Paste salah satu endpoint URL di atas
+4. Click **Send**
+5. Response akan muncul dalam JSON format
+
+---
+
+## 💡 Advanced Usage
+
+### Kombinasi Style Filter (Multiple Values):
+```json
+{
+  "draft": false,
+  "generationMethods": ["v5/fx", "v5/xl"],
+  "style_filter": ["pictorial", "mascot", "icon"]  // Tampilkan 3 style sekaligus
+}
+```
+
+### Sort Descending by CreatedAt (Terbaru):
+```json
+sort: ["createdAt", "desc"]
+```
+
+### Sort Ascending by CreatedAt (Tertua):
+```json
+sort: ["createdAt", "asc"]
+```
+
+---
+
+## ⚡ Performance Tips
+
+1. **Pagination**: Selalu gunakan `page` dan `limit` untuk data besar
+2. **Limit Maksimal**: Jangan set `limit` terlalu tinggi (40-50 sudah optimal)
+3. **Caching**: Cache hasil query jika ada request yang sama
+4. **Async Loading**: Load next page hanya saat user scroll atau klik "Load More"

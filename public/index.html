@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Diffusion Gallery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'DM Sans', sans-serif; }
+
+        .main-tab { transition: all 0.2s ease; }
+        .sub-tab { transition: all 0.2s ease; }
+
+        /* Custom select styling */
+        .sort-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 32px;
+            cursor: pointer;
+        }
+        .sort-select:focus { outline: none; box-shadow: 0 0 0 3px rgba(59,130,246,0.2); }
+
+        /* Gallery card */
+        .gallery-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .gallery-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+        .gallery-card img { transition: transform 0.3s ease; }
+        .gallery-card:hover img { transform: scale(1.06); }
+
+        /* Staff pick badge */
+        .staff-pick-badge {
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            padding: 2px 7px;
+            border-radius: 999px;
+            text-transform: uppercase;
+        }
+
+        /* Skeleton loader */
+        .skeleton { animation: pulse 1.5s ease-in-out infinite; background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; }
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Fade in items */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .gallery-card { animation: fadeUp 0.3s ease both; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+
+        <!-- Header -->
+        <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Logo Gallery</h1>
+                <p class="text-gray-500 text-sm mt-1">Explore community-generated logo designs</p>
+            </div>
+
+            <!-- Sort combobox -->
+            <div class="flex items-center gap-2">
+                <label class="text-sm font-medium text-gray-600 whitespace-nowrap">Sort by:</label>
+                <select id="sort-select" class="sort-select bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:border-blue-400 transition">
+                    <option value="recent">🕐 Recently Added</option>
+                    <option value="staff">⭐ Staff Picks</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Main Tabs -->
+        <div class="flex gap-1 mb-6 border-b border-gray-200">
+            <button class="main-tab px-5 py-3 text-sm font-semibold border-b-2 border-blue-600 text-blue-600" data-type="style">
+                Style
+            </button>
+            <button class="main-tab px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 hover:text-gray-700" data-type="industry">
+                Industry
+            </button>
+        </div>
+
+        <!-- Style Tab -->
+        <div id="style-tab" class="tab-content">
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-gray-900 text-white rounded-full" data-filter="pictorial">Pictorial</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="mascot">Mascot</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="badge">Badge</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="cartoon">Cartoon</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="icon">Icon</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="abstract">Abstract</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="line-art">Line Art</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="logo-type">Logo Type</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="monogram">Monogram</button>
+            </div>
+            <div class="status-box mb-4 text-sm text-gray-500 flex items-center gap-2"></div>
+            <div class="gallery grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+        </div>
+
+        <!-- Industry Tab -->
+        <div id="industry-tab" class="tab-content hidden">
+            <div class="flex flex-wrap gap-2 mb-6">
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-gray-900 text-white rounded-full" data-filter="Food and Beverage Industry">Food & Beverage</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Technology Industry">Technology</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Creative Arts Industry">Creative Arts</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Health and Wellness Industry">Health & Wellness</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Retail and Commerce Industry">Retail & Commerce</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Education Industry">Education</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Entertainment Industry">Entertainment</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Home and Living Industry">Home & Living</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Automotive Industry">Automotive</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Nature and Outdoors Industry">Nature & Outdoors</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Fashion and Apparel Industry">Fashion & Apparel</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Hospitality and Travel Industry">Hospitality & Travel</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Community and Nonprofit Industry">Community & Nonprofit</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Sports and Recreation Industry">Sports & Recreation</button>
+                <button class="sub-tab px-4 py-1.5 text-sm font-medium bg-white border border-gray-200 text-gray-600 rounded-full hover:border-gray-900 hover:text-gray-900" data-filter="Manufacturing and Industrial Industry">Manufacturing & Industrial</button>
+            </div>
+            <div class="status-box mb-4 text-sm text-gray-500 flex items-center gap-2"></div>
+            <div class="gallery grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://logo-diff-api.vercel.app/api/gallery';
+        let cache = {};
+        let currentType = 'style';
+        let currentFilter = 'pictorial';
+        let currentSort = 'recent'; // 'recent' | 'staff'
+
+        function getCacheKey() {
+            return `${currentType}-${currentFilter}-${currentSort}`;
+        }
+
+        function buildFilterObj() {
+            const filterObj = {
+                draft: false,
+                generationMethods: ["v5/fx", "v5/xl", "v5/waterfall", "v5/bolt", "v5/style-transfer"]
+            };
+
+            if (currentType === 'style') {
+                filterObj.style_filter = [currentFilter];
+            } else {
+                filterObj.industry_filter = [currentFilter];
+            }
+
+            // Staff picks: add staffPick: true to filter
+            if (currentSort === 'staff') {
+                filterObj.staffPick = true;
+            }
+
+            return filterObj;
+        }
+
+        function buildSortObj() {
+            // Staff picks sort by staffPicksViewOrder desc, else by createdAt desc
+            if (currentSort === 'staff') {
+                return ["staffPicksViewOrder", "desc"];
+            }
+            return ["createdAt", "desc"];
+        }
+
+        function fetchData(page = 1) {
+            const cacheKey = getCacheKey();
+
+            if (!cache[cacheKey]) {
+                cache[cacheKey] = { data: [], page: 0, totalPages: 0, loading: false, hasMore: false };
+            }
+
+            const state = cache[cacheKey];
+            if (state.loading) return;
+            state.loading = true;
+
+            const $container = $(`#${currentType}-tab`);
+            const $status = $container.find('.status-box');
+            const $gallery = $container.find('.gallery');
+
+            if (page === 1) {
+                $gallery.html(renderSkeletons(10));
+            }
+
+            $status.html('<span class="inline-block w-3 h-3 rounded-full bg-blue-400 animate-ping mr-2"></span> Loading...');
+
+            $.ajax({
+                url: API_BASE,
+                type: 'GET',
+                data: {
+                    page: page,
+                    limit: 40,
+                    filter: JSON.stringify(buildFilterObj()),
+                    sort: JSON.stringify(buildSortObj())
+                },
+                success: function(result) {
+                    if (page === 1) $gallery.html('');
+
+                    if (result.docs && result.docs.length > 0) {
+                        state.data = page === 1 ? result.docs : [...state.data, ...result.docs];
+                        state.page = page;
+                        state.totalPages = result.totalPages;
+                        state.hasMore = result.hasNextPage;
+
+                        renderGallery($gallery, state.data);
+
+                        const label = currentSort === 'staff' ? '⭐ Staff Picks' : '🕐 Recently Added';
+                        let statusMsg = `${label} &nbsp;·&nbsp; ${state.data.length} of ${result.totalDocs} loaded`;
+                        if (state.hasMore) {
+                            statusMsg += ` &nbsp;<button class="load-more text-blue-600 hover:underline font-semibold">Load more →</button>`;
+                        }
+                        $status.html(statusMsg);
+                    } else {
+                        $gallery.html(`<div class="col-span-5 text-center py-16 text-gray-400">
+                            <p class="text-5xl mb-3">🔍</p>
+                            <p class="font-medium">No results found</p>
+                            <p class="text-sm mt-1">Try a different filter or sort option</p>
+                        </div>`);
+                        $status.html('');
+                    }
+
+                    state.loading = false;
+                },
+                error: function() {
+                    $gallery.html(`<div class="col-span-5 text-center py-16 text-red-400">
+                        <p class="text-4xl mb-3">⚠️</p>
+                        <p class="font-medium">Failed to load images</p>
+                    </div>`);
+                    $status.html('');
+                    state.loading = false;
+                }
+            });
+        }
+
+        function renderSkeletons(count) {
+            return Array(count).fill('').map(() => `
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm">
+                    <div class="h-40 skeleton"></div>
+                    <div class="p-3 space-y-2">
+                        <div class="h-3 skeleton rounded w-3/4"></div>
+                        <div class="h-3 skeleton rounded w-1/2"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderGallery($gallery, data) {
+            data.forEach((item, index) => {
+                if ($gallery.find(`[data-id="${item._id}"]`).length === 0) {
+                    const img = item.generation?.imageUrl || '';
+                    const prompt = item.generation?.prompt || 'Untitled';
+                    const style = item.generation?.contentStyle || '';
+                    const date = new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    const isStaffPick = item.staffPick;
+
+                    const infoText = currentType === 'style'
+                        ? `<span class="text-xs text-gray-400 capitalize">${style.replace('-', ' ')}</span>`
+                        : `<span class="text-xs text-gray-400">${currentFilter.replace(' Industry', '')}</span>`;
+
+                    const staffBadge = isStaffPick
+                        ? `<span class="staff-pick-badge">⭐ Staff Pick</span>`
+                        : '';
+
+                    const html = `
+                        <div data-id="${item._id}" class="gallery-card bg-white rounded-xl overflow-hidden shadow-sm cursor-pointer" style="animation-delay:${(index % 10) * 30}ms">
+                            <div class="h-40 bg-gray-100 overflow-hidden relative">
+                                <img src="${img}" alt="${prompt.substring(0,60)}" class="w-full h-full object-cover" loading="lazy">
+                                ${isStaffPick ? `<div class="absolute top-2 left-2">${staffBadge}</div>` : ''}
+                            </div>
+                            <div class="p-3">
+                                <p class="text-sm font-semibold text-gray-800 truncate leading-snug">${prompt.substring(0, 42)}${prompt.length > 42 ? '…' : ''}</p>
+                                <div class="flex items-center justify-between mt-1">
+                                    ${infoText}
+                                    <span class="text-xs text-gray-300">${date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $gallery.append(html);
+                }
+            });
+        }
+
+        function resetAndFetch() {
+            const cacheKey = getCacheKey();
+            cache[cacheKey] = { data: [], page: 0, totalPages: 0, loading: false, hasMore: false };
+            fetchData(1);
+        }
+
+        // Main tab click
+        $(document).on('click', '.main-tab', function() {
+            const type = $(this).data('type');
+            currentType = type;
+
+            $('.main-tab')
+                .removeClass('border-blue-600 text-blue-600')
+                .addClass('border-transparent text-gray-500');
+            $(this)
+                .removeClass('border-transparent text-gray-500')
+                .addClass('border-blue-600 text-blue-600');
+
+            $('.tab-content').addClass('hidden');
+            $(`#${type}-tab`).removeClass('hidden');
+
+            $(`#${type}-tab .sub-tab:first`).click();
+        });
+
+        // Sub tab click
+        $(document).on('click', '.sub-tab', function() {
+            const filter = $(this).data('filter');
+            const $parent = $(this).closest('.tab-content');
+
+            currentFilter = filter;
+
+            $parent.find('.sub-tab')
+                .removeClass('bg-gray-900 text-white border-gray-900')
+                .addClass('bg-white border-gray-200 text-gray-600');
+            $(this)
+                .removeClass('bg-white border-gray-200 text-gray-600')
+                .addClass('bg-gray-900 text-white border-gray-900');
+
+            resetAndFetch();
+        });
+
+        // Sort combobox change
+        $('#sort-select').on('change', function() {
+            currentSort = $(this).val();
+            resetAndFetch();
+        });
+
+        // Load more
+        $(document).on('click', '.load-more', function(e) {
+            e.preventDefault();
+            const cacheKey = getCacheKey();
+            const state = cache[cacheKey];
+            if (state && state.hasMore && !state.loading) {
+                fetchData(state.page + 1);
+            }
+        });
+
+        // Init
+        $(document).ready(function() {
+            $('[data-type="style"]').click();
+        });
+    </script>
+</body>
+</html>
