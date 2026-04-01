@@ -7,15 +7,16 @@ https://logo-diff-api.vercel.app/api/gallery
 
 ---
 
-## 📋 Struktur Query Parameter
+## 📋 Query Parameter Structure
 
-### Parameter yang digunakan:
-- `page` - Nomor halaman (default: 1)
-- `limit` - Jumlah items per page (default: 40)
-- `filter` - JSON object dengan kondisi filter
-- `sort` - JSON array untuk sorting [field, direction]
+### Parameters used:
+- `page` - Page number (default: 1)
+- `limit` - Number of items per page (default: 40)
+- `filter` - JSON object with filter conditions
+- `sort` - JSON array for sorting [field, direction]
 
 ---
+
 ## 🎨 STYLE FILTERS
 
 ### 1. Pictorial
@@ -144,33 +145,33 @@ GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft"
 
 ---
 
-## 🔧 Cara Kerja Filter
+## 🔧 How Filtering Works
 
 ### Filter Object Structure:
 ```json
 {
-  "draft": false,                      // Hanya tampilkan published items
-  "generationMethods": [               // Hanya items dari method ini
+  "draft": false,                       // Only show published items
+  "generationMethods": [                // Only items from these methods
     "v5/fx",
     "v5/xl", 
     "v5/waterfall",
     "v5/bolt",
     "v5/style-transfer"
   ],
-  "style_filter": ["pictorial"],        // Atau gunakan ini untuk style
-  "industry_filter": ["Technology Industry"]  // Atau gunakan ini untuk industry
+  "style_filter": ["pictorial"],        // Or use this for style
+  "industry_filter": ["Technology Industry"]  // Or use this for industry
 }
 ```
 
-### Poin Penting:
-1. **Hanya gunakan SATU dari** `style_filter` atau `industry_filter`, tidak keduanya
-2. **draft: false** berarti hanya tampilkan item yang sudah dipublis
-3. **generationMethods** memfilter berdasarkan metode generasi AI
-4. **Nilai array** - bisa diisi multiple values jika perlu kombinasi
+### Key Points:
+1. **Use ONLY ONE of** `style_filter` or `industry_filter`, not both.
+2. **draft: false** means only items that have been published are displayed.
+3. **generationMethods** filters based on the AI generation method.
+4. **Array values** - can be filled with multiple values if a combination is needed.
 
 ---
 
-## 📊 Contoh Response
+## 📊 Response Example
 
 ```json
 {
@@ -197,33 +198,33 @@ GET https://logo-diff-api.vercel.app/api/gallery?page=1&limit=40&filter={"draft"
 
 ---
 
-## 🔗 Cara Testing di Postman
+## 🔗 How to Test in Postman
 
-1. Buka Postman
-2. Pilih **GET** method
-3. Paste salah satu endpoint URL di atas
-4. Click **Send**
-5. Response akan muncul dalam JSON format
+1. Open Postman.
+2. Select the **GET** method.
+3. Paste one of the endpoint URLs above.
+4. Click **Send**.
+5. The response will appear in JSON format.
 
 ---
 
 ## 💡 Advanced Usage
 
-### Kombinasi Style Filter (Multiple Values):
+### Style Filter Combination (Multiple Values):
 ```json
 {
   "draft": false,
   "generationMethods": ["v5/fx", "v5/xl"],
-  "style_filter": ["pictorial", "mascot", "icon"]  // Tampilkan 3 style sekaligus
+  "style_filter": ["pictorial", "mascot", "icon"]  // Show 3 styles at once
 }
 ```
 
-### Sort Descending by CreatedAt (Terbaru):
+### Sort Descending by CreatedAt (Newest):
 ```json
 sort: ["createdAt", "desc"]
 ```
 
-### Sort Ascending by CreatedAt (Tertua):
+### Sort Ascending by CreatedAt (Oldest):
 ```json
 sort: ["createdAt", "asc"]
 ```
@@ -232,7 +233,9 @@ sort: ["createdAt", "asc"]
 
 ## ⚡ Performance Tips
 
-1. **Pagination**: Selalu gunakan `page` dan `limit` untuk data besar
-2. **Limit Maksimal**: Jangan set `limit` terlalu tinggi (40-50 sudah optimal)
-3. **Caching**: Cache hasil query jika ada request yang sama
-4. **Async Loading**: Load next page hanya saat user scroll atau klik "Load More"
+1. **Pagination**: Always use `page` and `limit` for large data.
+2. **Maximum Limit**: Do not set `limit` too high (40-50 is optimal).
+3. **Caching**: Cache query results if there are identical requests.
+4. **Async Loading**: Load the next page only when the user scrolls or clicks "Load More".
+
+---
